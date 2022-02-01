@@ -1,0 +1,44 @@
+﻿@model ETG_TASK.Models.Account;
+@{
+    ViewData["Title"] = "SignUp";
+}
+
+
+<form method="post" asp-action="SignUp">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                    <div class="wrap d-md-flex">
+                        <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+                            <div class="text w-100">
+                                <h2>ETG TASK</h2>
+                                <p>Already have an account?</p>
+                                <a asp-area="" asp-controller="Account" asp-action="LogIn" class="btn btn-white btn-outline-white">Sign In</a>
+                            </div>
+                        </div>
+                        <div class="login-wrap p-4 p-lg-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">Sign Up</h3>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">Username</label>
+                                <input asp-for="Username" class="form-control" placeholder="Username">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Password</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

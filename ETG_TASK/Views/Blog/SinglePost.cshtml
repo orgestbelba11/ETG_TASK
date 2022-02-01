@@ -1,0 +1,76 @@
+﻿@model ETG_TASK.Models.ViewModels.BlogWithComment;
+
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "SinglePost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form method="post" asp-action="SinglePost">
+    @foreach (var post in Model.Blogs)
+    {
+        if (post.BlogID == @Context.Session.GetInt32("BlogID"))
+        {
+            <div class="technology-1">
+                <div class="container">
+                    <div class="col-md-9 technology-left">
+                        <div class="business">
+                            <div class=" blog-grid2">
+
+                                <img src="@Url.Content(post.ImagePath)" class="img-responsive" alt="">
+                                <div class="blog-text">
+                                    <h2>@post.Title</h2>
+                                    <p>@post.Text</p>
+                                </div>
+                            </div>
+
+                            <div class="comment-top">
+                                <h2>Comments</h2>
+                                <div class="blog-text">
+
+                                    @foreach (var comment in Model.Comments)
+
+                                    {
+                                        if (comment.BlogID == @Context.Session.GetInt32("BlogID"))
+                                        {
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="#">
+                                                        <img src="~/images/si.png" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">@comment.Commenter</h4>
+                                                    <p>@comment.Comment</p>
+                                                </div>
+                                            </div>
+                                        }
+
+                                     }
+                                    @*Checking if there are not any comments*@
+                                    @if (Model.Comments.Where(c => c.CommentID.Equals(Context.Session.GetInt32("BlogID"))).ToList().Count == 0)
+                                     {
+                                        <div class="media">
+                                          <div class="media-body">
+                                              <p>There are no comments yet.</p>
+                                          </div>
+                                        </div>
+                                     }
+                                </div>
+                            </div>
+                            @*Here the UserComment string won't be passed to the httpPost SinglePost action to save the comment to database.*@
+                            <div class="comment">
+                                
+                                <h2>Leave a Comment</h2>
+                                <div class="comment-bottom">
+                                    <input asp-for="UserComment" placeholder="Write a comment...">
+                                    <input type="submit" value="Send">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</form>

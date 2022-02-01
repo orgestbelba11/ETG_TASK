@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ETG_TASK.Models.Blog>
+
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "HomePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Index">
+    <div class="header">
+
+        <div class="banner">
+            <div class="container">
+                <h2 style="outline-color:black">Welcome</h2>
+                <p style="color:honeydew">Choose one category or click below to add a new post!</p>
+                <a asp-area="" asp-controller="Blog" asp-action="UploadPost">+ ADD NEW POST</a>
+                <br />
+                <br />
+                @*Since I had a model of IEnumerable<> type I tried this way to use "asp-for" tag helper*@
+                <input asp-for="FirstOrDefault().Category" class="btn btn-primary" type="submit" value="Technology">
+                <input asp-for="FirstOrDefault().Category" class="btn btn-primary" type="submit" value="Nature">
+                <input asp-for="FirstOrDefault().Category" class="btn btn-primary" type="submit" value="Architecture">
+                <input asp-for="FirstOrDefault().Category" class="btn btn-primary" type="submit" value="Art">
+                <input asp-for="FirstOrDefault().Category" class="btn btn-primary" type="submit" value="Sport"><br />
+
+            </div>
+        </div>
+
+        <div class="technology">
+            <div class="container">
+                <div class="col-md-9 technology-left">
+                    <div class="tech-no">
+                        @*The loop to display each blog post*@
+                        @foreach (var post in @Model)
+                         {
+                            <div class="tc-ch">
+                                <div class="tch-img">
+                                    <a asp-area="" asp-controller="Blog" asp-action="SinglePost" asp-route-id="@post.BlogID">
+                                        <img src="@Url.Content(post.ImagePath)" class="img-responsive" alt="">
+                                    </a>
+                                </div>
+                                <a class="blog blue">@post.Category</a>
+                                <h3><a asp-area="" asp-controller="Blog" asp-action="SinglePost" asp-route-id="@post.BlogID">@post.Title</a></h3>
+                                <p>@post.Text</p>
+
+                                <div class="blog-poast-info">
+                                    <ul>
+                                        <li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"> @post.Admin </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                         }
+                    </div>
+                </div>
+                <div class="col-md-3 technology-right">
+                    <div class="blo-top">
+                        <div class="tech-btm">
+                            <a style="margin-left: 45px;color:white" class="btn btn-primary" asp-controller="Account" asp-action="LogIn">Log Out</a>
+                        </div>
+                    </div>
+                    @*Here the text box is never empty because it has the First() value of Blogs collections,
+                      but if you delete it befor you search it will work fine*@
+                    <div class="blo-top">
+                        <div class="tech-btm">
+                            <h4>Search a post by the title :</h4>
+                            <div class="name">
+                                <form>
+                                    <input asp-for="FirstOrDefault().Title" type="text" placeholder="Type Something...">
+                                </form>
+                            </div>
+                            <div class="button">
+                                <form>
+                                    <input type="submit" value="Search">
+                                </form>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+</form>
